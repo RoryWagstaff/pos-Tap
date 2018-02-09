@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title> Pos-Tap </title>
+<link href="pos.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Josefin+Sans" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<h1 id="header"> Posi-Tap </h1>
+
+
+	<div class="circle-container">
+		<div class="circle circle-outer">
+			<div class="circle-inner circle"></div>
+		</div>
+	</div>	
+
+	<div class="timer-container">
+		<div class="timer-container-inner">
+		<h3> Timer </h3>
+		<input type="text" placeholder="10m" name="timer" id="timerid">
+		<input id="start"  type="submit" value="Start"   onclick="startTimer(); startTimer2();" >
+	<!--	<h4 id="start"> Start </h4>  -->
+	</div>
+	</div>
+
+	<div class="meditation-screen-container" >
+		<div class="shared meditation-screen-inner" ondblclick="pingSound()">
+			<h1 id="cancel"> X </h1>
+			<div class="timer-holder">
+				<h3 id="completed-timer">  </h3>
+			<h4 id="completed-timer-second-tier"> </h4>
+			<h4 id="completed-timer-second-tier-colon"> :</h4>
+		</div>
+			<div class="meditation-circle-container">
+				<div class="meditation-circle-inner"> </div>	
+			</div>	
+			<h4 id="counter">   </h4>
+		</div>
+
+
+
+
+	</div>	
+
+	<div class="reminder">
+		<div class="reminder-inner shared">
+			<h3> Enter in how many minutes you want to meditate for </h3>
+			<h4 id="ok"> Ok </h4>
+
+		</div>	
+
+
+	</div>	
+
+		
+
+
+	<div class="options shared">
+		<h2> Do you want to return to the main Menu? </h2>
+		<h3 id="yes"> Yes </h3>
+		<h3 id="lower"> Non </h3>
+
+
+
+	</div>	
+
+	<div class="shared completed">
+		<h2> Well done, you positively intepretated: </h2>
+		<h1 id="completed-counter">  </h1>
+		<h3> Thoughts during that session </h3>
+		<h4 id="progress"> Progress </h4>
+
+	</div>	
+
+	<div class="completed-continued">
+
+		<div class="completed-continued-container shared">
+			<div class="completed-header"> 
+				<h1 id="left"> Stats </h1>
+				<h1 id="right"> Best Of </h1>
+			</div>
+
+			<div class="completed-stats">
+				<h3 class="completed-headers" id="c1"> Longest Session </h3>
+					<h1 id='a1'> 10 Minutes </h1>
+					<h3 id="c2"> Most positive intepretation in session </h3>
+					<h1 id="a2"> 32 </h1>
+					<h3 id="c3"> Longest Streak </h3>
+					<h1 id="a3"> 4 days  </h1>
+			</div>	
+
+			<div class="completed-best options">
+
+			</div>	
+		
+		</div>	
+	</div>
+
+
+
+
+
+
+
+</div>	
+
+
+
+
+
+</body>
+
+<script src="jquery-3.2.1.min.js"> </script>
+<script>
+
+	$(document).ready(function() {
+
+		
+
+
+		function startOver () {
+			$(".circle-container").fadeOut(500);
+
+		}
+		function timerFadeIn () {
+			$(".timer-container").fadeIn(500);
+		}
+
+
+		$("#start").click(function(){
+				let test = $("input").val();
+			if (test > 0) {
+			$(".timer-container").fadeOut(1000);
+			$(".meditation-screen-container").delay(1000).fadeIn(1000);
+		}   else {
+			$(".reminder").fadeIn(1000);
+		}
+		});
+
+	/*	$(".meditation-screen-inner").click(function(){
+
+			$(".meditation-screen-inner").css("background", "#FFDA0D");
+			setTimeout(changeBack,2000);
+		
+
+
+		});
+
+		function changeBack () {
+			$(".meditation-screen-inner").css("background", "orange");
+
+		}
+
+*/
+
+		$("#yes").click(function(){
+			$(".options").css("visibility","hidden");
+			setTimeout(getRid,1000);
+			});
+
+			function getRid () {
+
+			$(".meditation-screen-container").fadeOut(500)
+			$(".timer-container").delay(1000).fadeIn(500);
+			
+			}
+		
+
+		$("#lower").click(function(){
+			$(".options").css("visibility","hidden");
+		});
+
+		/*
+		$("#counter").click(function(){
+			$(".completed").css("visibility", "visible");
+		});
+
+		*/
+
+
+
+		$("#progress").click(function(){
+			$(".completed").css("visibility", "hidden");
+			$(".completed-continued").fadeIn(500);
+		});
+
+
+		$("#right").click(function(){
+			$("#right").css("border-bottom", "4px solid orange");
+			$("#left").css("border-bottom", "0");
+			$(".completed-stats").fadeOut(500);
+			$(".completed-best").fadeIn(500);
+			
+		});
+
+		$("#left").click(function(){
+			$("#left").css("border-bottom", "4px solid orange");
+			$("#right").css("border-bottom", "0");
+			$(".completed-stats").fadeIn(500);
+			$(".completed-best").fadeOut(500);
+		});
+
+
+		const endingPing = new Audio("endingping.wav");
+
+		
+	
+
+			$("#start").click(function startTimer () {
+				val = 59;
+
+			 setInterval(function  (){
+			 
+			 $("#completed-timer").text(val--);
+			 if (val == 0) {
+			 	val = 59;
+			 }
+			},1000);
+		
+
+			});
+
+			$("#start").click(function startTimer2 () {
+				val2 = $("input").val() - 1;
+				$("#completed-timer-second-tier").text(val2);
+
+				setInterval(function () {
+					$("#completed-timer-second-tier").text(val2--);
+					if (val2 < 0) {
+				clearTimeout(startTimer2);
+				$("#completed-timer-second-tier").fadeOut(100);
+				$("#completed-timer-second-tier-colon").fadeOut(100);
+				$("#completed-timer").fadeOut(100);
+				$("#cancel").fadeOut(100);
+				endingPing.play();
+				setTimeout(finishedPopUp,2000);
+				
+
+			} else if ($('.options').css('visibility') == 'visible') {
+				$("#completed-timer").delay(2000).text("Pause");
+				
+			}
+
+					
+				},60000);
+			});
+
+
+
+/*
+
+
+			$("#start").click(function startTimer () {
+				val = $("input").val();
+				val2 = 60;
+
+				if (val > 0) {
+
+			 setInterval(function  (){
+			 
+			 $("#completed-timer").text(val--);
+			 	$("#completed-timer-second-tier").text(val2--);
+
+
+
+			if (val === 0) {
+				clearTimeout(startTimer);
+				endingPing.play();
+				setTimeout(finishedPopUp,2000);
+				$("#completed-timer").fadeOut(2000);
+
+			} else if ($('.options').css('visibility') == 'visible') {
+				$("#completed-timer").delay(2000).text("Pause");
+				
+			}
+			},1000);
+			} else {
+				$(".reminder").fadeIn(1000);
+			}
+
+			});
+
+
+			*/
+
+			$("#ok").click(function(){
+				$(".reminder").fadeOut(500);
+			});
+
+			
+			function collectTime () {
+				var please = $("#completed-timer").text();
+			}
+				function finishedPopUp () {
+
+				$(".completed").css("visibility", "visible");
+
+			}
+
+
+
+
+		$("#cancel").click(function(){
+			$(".options").css("visibility","visible");
+			
+		});
+
+
+		var DELAY = 700, clicks = 0, timer = null;
+		let counter1 = 0;
+		const ping = new Audio("ping.wav");
+
+
+$(function(){
+
+    $(".meditation-screen-inner").on("click", function(e){
+
+        clicks++;  //count clicks
+
+        if(clicks === 1) {
+
+            timer = setTimeout(function() {
+            	 $(".meditation-screen-inner").css("background", "red");
+			setTimeout(changeBack,1000);
+
+                  //perform single-click action    
+                clicks = 0;             //after action performed, reset counter
+               
+
+            }, DELAY);
+
+        } else {
+
+            clearTimeout(timer);    //prevent single-click action
+             $(".meditation-screen-inner").css("background", "#FFDA0D");
+			setTimeout(changeBack,1000);
+             ping.play();
+             $("#counter").html(counter1);
+             counter1++;
+             $("#completed-counter").html(counter1);
+             //perform double-click action
+            clicks = 0;             //after action performed, reset counter
+        }
+
+    })
+    .on("dblclick", function(e){
+        e.preventDefault();  //cancel system double-click event
+    });
+
+});
+
+function changeBack () {
+			$(".meditation-screen-inner").css("background", "orange");
+
+		}
+		
+
+	
+		setTimeout(startOver,2500);
+		setTimeout(timerFadeIn,3000);
+	
+	});
+
+</script>
+
+<script src="pos.js"> </script>
+</html>
